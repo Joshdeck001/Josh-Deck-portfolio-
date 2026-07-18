@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adenle Joshua | Josh Deck — Amazon KDP Publishing Strategist</title>
+<style>
+  :root{
+    --navy:#0B2E59;
+    --navy-soft:#274B78;
+    --paper:#FFFFFF;
+    --paper-dim:#EEF3FA;
+    --blue:#1E64D6;
+    --blue-bright:#3E82F5;
+    --sky:#DCE9FB;
+    --line:#D7E2F0;
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    --mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --wordmark: 'Futura', 'Century Gothic', 'Trebuchet MS', var(--sans);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--navy);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  a{color:inherit;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--blue); outline-offset:3px;}
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px;}
+  .brand{
+    font-family:var(--wordmark); font-weight:800; font-size:1.7rem; letter-spacing:0.01em;
+    color:var(--navy); text-transform:uppercase;
+  }
+  .brand span{color:var(--blue);}
+  .navlinks{display:flex; gap:28px; font-size:0.82rem; letter-spacing:0.06em; text-transform:uppercase; font-family:var(--mono);}
+  .navlinks a{text-decoration:none; opacity:0.7; transition:opacity 0.2s; color:var(--navy-soft);}
+  .navlinks a:hover{opacity:1;}
+  @media (max-width:800px){.navlinks{display:none;}}
+
+  /* ---------- HERO ---------- */
+  header.hero{padding:70px 0 60px; border-bottom:1px solid var(--line); position:relative; overflow:hidden; background:linear-gradient(180deg, var(--sky) 0%, var(--paper) 65%);}
+
+  .hero-wordmark{
+    font-family:var(--wordmark); font-weight:800; text-transform:uppercase;
+    font-size:clamp(3.2rem, 11vw, 8.5rem); line-height:0.88; letter-spacing:-0.01em;
+    color:var(--navy);
+  }
+  .hero-wordmark .hi{color:var(--blue);}
+
+  .eyebrow{
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--blue); margin:26px 0 14px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--blue); display:inline-block;}
+
+  .hero .names{font-family:var(--mono); font-size:0.95rem; color:var(--navy-soft);}
+  .hero .names b{color:var(--navy); font-weight:700;}
+
+  .hero p.lede{
+    margin-top:20px; max-width:620px; font-size:1.08rem; color:var(--navy-soft);
+  }
+
+  .hero-stats{
+    display:flex; gap:0; margin-top:44px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .stat{flex:1; padding:20px 20px 20px 0; border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:var(--serif); font-size:2.1rem; font-weight:700; color:var(--blue);}
+  .stat .label{font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--navy-soft); margin-top:4px;}
+
+  .manuscript{
+    margin-top:56px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    box-shadow: 0 18px 40px -22px rgba(11,46,89,0.25);
+    padding:38px 42px;
+    position:relative;
+    font-family:var(--serif);
+    font-size:1.02rem;
+    color:var(--navy-soft);
+    max-width:760px;
+  }
+  .manuscript::before{
+    content:'MS. — FRONT MATTER REVIEW';
+    position:absolute; top:-11px; left:36px; background:var(--paper);
+    padding:0 10px; font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em;
+    color:var(--navy-soft);
+  }
+  .manuscript p{margin-bottom:14px;}
+  .mark{
+    position:relative; text-decoration:none; border-bottom:2px solid var(--blue);
+    color:var(--navy);
+  }
+  .mark::after{
+    content: attr(data-note);
+    display:block;
+    font-family:var(--mono); font-size:0.68rem; color:var(--blue);
+    text-transform:uppercase; letter-spacing:0.04em;
+    margin-top:6px; opacity:0; max-height:0; overflow:hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+  }
+  .manuscript.revealed .mark::after{opacity:1; max-height:30px;}
+  .mark2{border-bottom:2px solid var(--navy);}
+  .mark2::after{color:var(--navy) !important;}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:76px 0; border-bottom:1px solid var(--line);}
+  .sec-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:44px; flex-wrap:wrap; gap:12px;}
+  .sec-head h2{font-family:var(--serif); font-size:clamp(1.7rem,3.2vw,2.3rem); font-weight:700; color:var(--navy);}
+  .sec-num{font-family:var(--mono); font-size:0.78rem; color:var(--blue); letter-spacing:0.1em;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns: 1.1fr 0.9fr; gap:56px;}
+  @media (max-width:800px){.about-grid{grid-template-columns:1fr;}}
+  .about-grid p{margin-bottom:16px; color:var(--navy-soft); font-size:1.02rem;}
+  .about-grid strong{color:var(--navy);}
+  .pull{
+    font-family:var(--serif); font-style:italic; font-size:1.4rem; line-height:1.4;
+    border-left:3px solid var(--blue); padding-left:22px; color:var(--navy);
+  }
+
+  /* ---------- SERVICES (index card style) ---------- */
+  .card-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  @media (max-width:720px){.card-grid{grid-template-columns:1fr;}}
+  .card{background:var(--paper); padding:30px 30px 26px;}
+  .card .tag{font-family:var(--mono); font-size:0.68rem; color:var(--blue); letter-spacing:0.08em; text-transform:uppercase;}
+  .card h3{font-family:var(--serif); font-size:1.25rem; margin:10px 0 10px; font-weight:700; color:var(--navy);}
+  .card p{color:var(--navy-soft); font-size:0.94rem;}
+
+  /* ---------- PROCESS (chapter list) ---------- */
+  .chapter{display:grid; grid-template-columns:90px 1fr; gap:24px; padding:26px 0; border-top:1px solid var(--line);}
+  .chapter:last-child{border-bottom:1px solid var(--line);}
+  .chap-no{font-family:var(--serif); font-size:2.2rem; font-weight:700; -webkit-text-stroke: 1px var(--blue); color:transparent;}
+  .chapter h3{font-family:var(--serif); font-size:1.2rem; margin-bottom:6px; color:var(--navy);}
+  .chapter p{color:var(--navy-soft); font-size:0.96rem; max-width:600px;}
+
+  /* ---------- WHY / PHILOSOPHY ---------- */
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  @media (max-width:800px){.two-col{grid-template-columns:1fr;}}
+  .list-item{padding:16px 0; border-top:1px solid var(--line); display:flex; gap:16px;}
+  .list-item:last-child{border-bottom:1px solid var(--line);}
+  .list-item .dot{width:6px; height:6px; border-radius:50%; background:var(--blue); margin-top:9px; flex-shrink:0;}
+  .list-item p{color:var(--navy-soft); font-size:0.96rem;}
+  .list-item strong{color:var(--navy); font-family:var(--serif);}
+
+  blockquote.phil{
+    font-family:var(--serif); font-style:italic; font-size:1.3rem; line-height:1.5;
+    color:var(--navy); margin-top:8px;
+  }
+  blockquote.phil cite{display:block; margin-top:16px; font-style:normal; font-family:var(--mono); font-size:0.75rem; color:var(--blue); letter-spacing:0.08em;}
+
+  /* ---------- PORTFOLIO PROJECTS (spine shelf) ---------- */
+  .shelf{display:flex; gap:14px; overflow-x:auto; padding-bottom:14px; scrollbar-width:thin;}
+  .spine{
+    min-width:150px; background:var(--navy); color:var(--paper);
+    padding:24px 14px; display:flex; flex-direction:column; justify-content:space-between;
+    height:320px; border-top:4px solid var(--blue-bright);
+    transition: transform 0.25s ease;
+  }
+  .spine:hover{transform:translateY(-8px);}
+  .spine .p-tag{font-family:var(--mono); font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--blue-bright);}
+  .spine .p-title{font-family:var(--serif); font-size:1.05rem; font-weight:700; line-height:1.3; margin-top:14px;}
+  .spine .p-desc{font-size:0.78rem; color:#c9d8ef; margin-top:12px; line-height:1.5;}
+  .spine .p-note{font-family:var(--mono); font-size:0.6rem; color:#7fa8d9; margin-top:10px; text-transform:uppercase; letter-spacing:0.05em;}
+
+  /* ---------- COVER GALLERY ---------- */
+  .gallery-note{color:var(--navy-soft); font-size:0.95rem; max-width:640px; margin-bottom:34px;}
+  .gallery-note code{background:var(--sky); padding:2px 6px; font-family:var(--mono); font-size:0.85em; border-radius:3px;}
+  .cover-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:16px;}
+  @media (max-width:900px){.cover-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:560px){.cover-grid{grid-template-columns:repeat(2,1fr);}}
+  .cover-slot{
+    aspect-ratio: 2/3; background:var(--sky); border:1.5px dashed var(--blue);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px;
+    overflow:hidden; position:relative;
+  }
+  .cover-slot img{width:100%; height:100%; object-fit:cover; display:none;}
+  .cover-slot img.loaded{display:block;}
+  .cover-slot .placeholder-txt{
+    font-family:var(--mono); font-size:0.65rem; color:var(--navy-soft); text-align:center; padding:0 10px; text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .cover-slot .slot-no{font-family:var(--serif); font-size:1.6rem; color:var(--blue); font-weight:700;}
+
+  /* ---------- MANUSCRIPT SAMPLES ---------- */
+  .ms-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  @media (max-width:700px){.ms-grid{grid-template-columns:1fr;}}
+  .ms-slot{
+    border:1px solid var(--line); background:var(--paper-dim); padding:22px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .ms-slot .ms-left{display:flex; align-items:center; gap:14px;}
+  .ms-icon{
+    width:38px; height:48px; background:var(--navy); flex-shrink:0; position:relative;
+  }
+  .ms-icon::after{content:''; position:absolute; top:0; right:0; width:0; height:0; border-style:solid; border-width:0 12px 12px 0; border-color:transparent var(--paper-dim) transparent transparent;}
+  .ms-slot h4{font-family:var(--serif); font-size:1rem; color:var(--navy);}
+  .ms-slot span{font-family:var(--mono); font-size:0.7rem; color:var(--navy-soft); text-transform:uppercase;}
+  .ms-dl{font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; color:var(--blue); text-decoration:none; border-bottom:1px solid var(--blue); white-space:nowrap;}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:16px;}
+  @media (max-width:900px){.testi-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:560px){.testi-grid{grid-template-columns:repeat(2,1fr);}}
+  .testi-slot{
+    aspect-ratio:4/5; background:var(--sky); border:1.5px dashed var(--navy-soft);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;
+    overflow:hidden; position:relative;
+  }
+  .testi-slot img{width:100%; height:100%; object-fit:cover; display:none;}
+  .testi-slot img.loaded{display:block;}
+  .testi-slot .quote-mark{font-family:var(--serif); font-size:2.2rem; color:var(--blue); line-height:1;}
+  .testi-slot .placeholder-txt{font-family:var(--mono); font-size:0.62rem; color:var(--navy-soft); text-align:center; padding:0 8px; text-transform:uppercase; letter-spacing:0.04em;}
+
+  /* ---------- FAQ (marginalia) ---------- */
+  .faq-item{border-top:1px solid var(--line); padding:22px 0;}
+  .faq-item:last-child{border-bottom:1px solid var(--line);}
+  .faq-item summary{
+    font-family:var(--serif); font-size:1.08rem; font-weight:700; cursor:pointer;
+    list-style:none; display:flex; justify-content:space-between; align-items:center; color:var(--navy);
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+'; font-family:var(--mono); color:var(--blue); font-size:1.3rem;}
+  .faq-item[open] summary::after{content:'–';}
+  .faq-item .a{margin-top:12px; color:var(--navy-soft); font-size:0.96rem; max-width:680px;}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    background:var(--navy); color:var(--paper); text-align:left; padding:70px 0; border-bottom:none;
+  }
+  .cta h2{font-family:var(--serif); font-size:clamp(1.8rem,4vw,2.6rem); max-width:640px; line-height:1.15;}
+  .cta p{color:#b9cbe6; margin-top:18px; max-width:520px;}
+  .cta-actions{margin-top:34px; display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:0.82rem; letter-spacing:0.06em; text-transform:uppercase;
+    padding:15px 26px; border:1px solid var(--blue-bright); color:var(--paper); text-decoration:none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn.primary{background:var(--blue-bright); color:var(--navy); border-color:var(--blue-bright); font-weight:700;}
+  .btn.primary:hover{background:#fff;}
+  .btn:not(.primary):hover{background:rgba(62,130,245,0.15);}
+
+  footer{padding:30px 0; text-align:center; font-family:var(--mono); font-size:0.72rem; color:var(--navy-soft); letter-spacing:0.04em;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Josh <span>Deck</span></div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#covers">Covers</a>
+      <a href="#manuscripts">Manuscripts</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-wordmark">JOSH<br><span class="hi">DECK</span></div>
+    <div class="eyebrow">Amazon KDP Publishing Strategist</div>
+    <div class="names">Legal name: <b>Adenle Joshua</b> &nbsp;·&nbsp; Publishing under: <b>Josh Deck</b></div>
+    <p class="lede">I help authors, coaches, businesses, and publishers turn ideas into commercially competitive Amazon books — researched, positioned, and optimized before a single chapter is written.</p>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="num">100+</div><div class="label">Books Published</div></div>
+      <div class="stat"><div class="num">12</div><div class="label">Core Disciplines</div></div>
+      <div class="stat"><div class="num">2</div><div class="label">Platforms Mastered — KDP &amp; GoodNovel</div></div>
+    </div>
+
+    <div class="manuscript" id="ms">
+      <p>Before a book is written, it is <a href="#" class="mark" data-note="Validated against Best Seller &amp; New Release data">validated</a>. Every title I take on is checked against real demand, not guesswork — competitor positioning, reader review gaps, and <a href="#" class="mark mark2" data-note="Backend keywords + category selection">keyword architecture</a> are decided before the manuscript exists.</p>
+      <p>What ships is not just a book. It is a <a href="#" class="mark" data-note="Cover · metadata · interior · description">complete publishing product</a> — built to convert a browsing reader into a buyer.</p>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>About</h2>
+      <div class="sec-num">01 / Front Matter</div>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p><strong>I'm Adenle Joshua</strong>, publishing under the name Josh Deck. Over more than 100 titles — my own catalog and client work across fiction and nonfiction — I've built a repeatable system for taking a book from idea to a commercially positioned product on Amazon.</p>
+        <p>My catalog spans genre fiction (romance and paranormal) and practical nonfiction guides built for KDP's beginner-to-intermediate reader. I've navigated everything a working publisher runs into: category and title-similarity rejections, keyword competition, cover-thumbnail testing, and building a catalog strategy that survives platform changes rather than one lucky launch.</p>
+        <p>I also run a mentorship program teaching independent authors and aspiring publishers this exact workflow — which means I don't just do the work, I can explain every decision inside it, clearly, to a client who's never touched KDP before.</p>
+      </div>
+      <div>
+        <p class="pull">"I don't publish books. I build products that solve a reader's problem — and I can prove why, before it's written."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Core Services</h2>
+      <div class="sec-num">02 / Table of Contents</div>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Research</div>
+        <h3>Market Research &amp; Validation</h3>
+        <p>Best Seller and New Release analysis, review-mining for unmet reader demand, and evergreen vs. seasonal opportunity mapping — before you commit to writing anything.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Strategy</div>
+        <h3>Book Concept Development</h3>
+        <p>Commercially viable concepts built around a clear promise, a defined audience, and a genuine unique selling proposition — with series strategy where it makes sense.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Discoverability</div>
+        <h3>Keyword Research &amp; Amazon SEO</h3>
+        <p>High-intent keyword discovery, backend keyword optimization, and category selection that puts your book in front of buyers already searching for it.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Positioning</div>
+        <h3>Competitive Analysis</h3>
+        <p>A clear read on bestselling competitors — pricing, cover trends, and reader expectations — so your book has a defined edge, not a guess.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Structure</div>
+        <h3>Content &amp; Chapter Planning</h3>
+        <p>Reader-journey-driven tables of contents and chapter frameworks that keep nonfiction useful and fiction moving toward the next page-turn.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Quality</div>
+        <h3>Editorial Pass</h3>
+        <p>Fact-checking, clarity edits, consistency checks, and a professional-standard polish before anything goes to print or upload.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Design</div>
+        <h3>Cover &amp; Interior Strategy</h3>
+        <p>Bestseller-informed cover direction — typography, color psychology, thumbnail readability — plus print-ready interior formatting across trim sizes.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Launch</div>
+        <h3>Metadata &amp; Publishing Roadmap</h3>
+        <p>Categories, keywords, descriptions, subtitle strategy, and author positioning — assembled into one launch-ready publishing package.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>My Publishing Process</h2>
+      <div class="sec-num">03 / Chapters</div>
+    </div>
+    <div class="chapters">
+      <div class="chapter">
+        <div class="chap-no">01</div>
+        <div><h3>Validate the idea</h3><p>Research 2–3 top-performing books in your target category. Identify what separates strong performers from weak ones — pacing, positioning, tag strategy — before a word is written.</p></div>
+      </div>
+      <div class="chapter">
+        <div class="chap-no">02</div>
+        <div><h3>Build the blueprint</h3><p>A full concept and structure document: story or content outline, audience positioning, competitive angle, and — for fiction — a beat-by-beat plot map built to platform acceptance criteria.</p></div>
+      </div>
+      <div class="chapter">
+        <div class="chap-no">03</div>
+        <div><h3>Write to the market, not around it</h3><p>Chapters written in the pacing and voice that performs in your category — dialogue-forward, hook-driven, reader-tested structure from page one.</p></div>
+      </div>
+      <div class="chapter">
+        <div class="chap-no">04</div>
+        <div><h3>Optimize for discovery</h3><p>Keywords, categories, title and subtitle architecture, and a description built to convert — so the book can actually be found.</p></div>
+      </div>
+      <div class="chapter">
+        <div class="chap-no">05</div>
+        <div><h3>Package and launch</h3><p>Cover direction, interior formatting, metadata, and a publishing roadmap handed over ready to upload — or fully managed to publish.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Why Clients Hire Me</h2>
+      <div class="sec-num">04 / Marginalia</div>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="list-item"><div class="dot"></div><p><strong>I've done this at volume.</strong> 100+ published titles means I've already made — and solved — the mistakes a first-time publisher hasn't hit yet.</p></div>
+        <div class="list-item"><div class="dot"></div><p><strong>I think like a business, not a hobbyist.</strong> Every decision is checked against market demand, competition, and long-term value — not personal taste.</p></div>
+        <div class="list-item"><div class="dot"></div><p><strong>I cover the full chain.</strong> Research, writing, editing, cover strategy, metadata, and launch — one person who understands how each piece affects the others.</p></div>
+        <div class="list-item"><div class="dot"></div><p><strong>I teach this system.</strong> Running a mentorship program means I can explain the reasoning behind every recommendation clearly, not just execute silently.</p></div>
+      </div>
+      <div>
+        <h3 style="font-family:var(--serif); font-size:1.15rem; margin-bottom:14px; color:var(--navy);">Publishing Philosophy</h3>
+        <blockquote class="phil">
+          Guesswork is the most expensive part of publishing. Every hour spent writing toward the wrong audience is an hour a competitor spent writing toward a proven one.
+          <cite>— Josh Deck</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Portfolio Projects</h2>
+      <div class="sec-num">05 / On the Shelf</div>
+    </div>
+    <div class="shelf">
+      <div class="spine">
+        <div class="p-tag">Fiction · Paranormal Romance</div>
+        <div>
+          <div class="p-title">Bound to the Alpha's Throne</div>
+          <div class="p-desc">Werewolf-romance catalog title, built on the "Claimed/Bound" formula developed across a 30-title challenge.</div>
+        </div>
+        <div class="p-note">Sample title</div>
+      </div>
+      <div class="spine">
+        <div class="p-tag">Fiction · Small-Town Romance</div>
+        <div>
+          <div class="p-title">The Vineyard We Never Sold</div>
+          <div class="p-desc">Small-town romance catalog expansion, applying the same systematic formula used across the fiction line.</div>
+        </div>
+        <div class="p-note">Sample title</div>
+      </div>
+      <div class="spine">
+        <div class="p-tag">Nonfiction · KDP</div>
+        <div>
+          <div class="p-title">Facebook, Instagram &amp; TikTok User Guide for Beginners</div>
+          <div class="p-desc">Conversational-coaching-tone social media guide, structured and formatted for the 8.5×11 KDP trim.</div>
+        </div>
+      </div>
+      <div class="spine">
+        <div class="p-tag">Mentorship</div>
+        <div>
+          <div class="p-title">KDP Publishing Mentorship Program</div>
+          <div class="p-desc">Teaching independent authors the full research-to-launch workflow that built a 100+ title catalog.</div>
+        </div>
+      </div>
+      <div class="spine">
+        <div class="p-tag">Content Strategy</div>
+        <div>
+          <div class="p-title">Josh DK TV &amp; Military Power Files</div>
+          <div class="p-desc">Narrative and research-driven YouTube production, applying the same audience-validation thinking to video as to books.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="covers">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Book Cover Gallery</h2>
+      <div class="sec-num">06 / The Shelf</div>
+    </div>
+    <p class="gallery-note">Ten covers from published titles. To add yours: create an <code>images</code> folder next to this file, save your covers as <code>cover-01.jpg</code> through <code>cover-10.jpg</code>, and they'll appear automatically here.</p>
+    <div class="cover-grid" id="cover-grid"></div>
+  </div>
+</section>
+
+<section id="manuscripts">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Manuscript Samples</h2>
+      <div class="sec-num">07 / Read Before You Hire</div>
+    </div>
+    <p class="gallery-note">A few sample manuscripts and outlines clients can preview before reaching out. To add yours: create a <code>manuscripts</code> folder next to this file and drop in PDFs named to match the slots below (or edit the file names in the code directly).</p>
+    <div class="ms-grid" id="ms-grid"></div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Client Testimonials</h2>
+      <div class="sec-num">08 / What Readers &amp; Clients Say</div>
+    </div>
+    <p class="gallery-note">Screenshots of reviews and client feedback. To add yours: create a <code>testimonials</code> folder next to this file, save screenshots as <code>testimonial-01.jpg</code> through <code>testimonial-10.jpg</code>, and they'll appear automatically here.</p>
+    <div class="testi-grid" id="testi-grid"></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Frequently Asked Questions</h2>
+      <div class="sec-num">09 / Reader Questions</div>
+    </div>
+    <details class="faq-item" open>
+      <summary>Do you write the book, or just consult on strategy?</summary>
+      <div class="a">Both — depending on what you need. I can run the full process end-to-end (research through launch), or plug in at a single stage: outline, ghostwriting, keyword/metadata optimization, or editorial pass.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Do you work in fiction, nonfiction, or both?</summary>
+      <div class="a">Both. My catalog includes genre fiction (romance, paranormal, drama) and practical nonfiction guides. The research-first approach applies to either.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Can you help if I already have a manuscript?</summary>
+      <div class="a">Yes. I can run a competitive and keyword audit on an existing manuscript, then rebuild positioning, metadata, and cover direction around what's already written.</div>
+    </details>
+    <details class="faq-item">
+      <summary>What platforms do you publish on?</summary>
+      <div class="a">Primarily Amazon KDP, with fiction experience on GoodNovel's contract program and audiobook distribution through FindAway Voices.</div>
+    </details>
+    <details class="faq-item">
+      <summary>How do you handle Amazon's category and title-similarity rules?</summary>
+      <div class="a">I've navigated title-similarity rejections and category strategy directly across a real catalog, so title and metadata decisions are made to avoid these issues upfront, not fixed after a rejection.</div>
+    </details>
+  </div>
+</section>
+
+<section class="cta" id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <h2>Publishing is a business decision. Let's make yours a good one.</h2>
+    <p>If you have a book idea, a stalled manuscript, or a catalog that needs a real strategy behind it — I'll tell you honestly what it needs.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn primary">Message Josh Deck on Upwork</a>
+      <a href="#covers" class="btn">View the Catalog</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Adenle Joshua &nbsp;·&nbsp; Publishing as Josh Deck &nbsp;·&nbsp; Amazon KDP Publishing Strategist
+</footer>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const ms = document.getElementById('ms');
+    setTimeout(() => ms.classList.add('revealed'), 500);
+
+    // Build 10 cover slots — drop images into /images/cover-01.jpg ... cover-10.jpg
+    const coverGrid = document.getElementById('cover-grid');
+    for(let i=1; i<=10; i++){
+      const num = String(i).padStart(2,'0');
+      const slot = document.createElement('div');
+      slot.className = 'cover-slot';
+      slot.innerHTML = `
+        <img src="images/cover-${num}.jpg" alt="Book cover ${num}" onload="this.classList.add('loaded'); this.nextElementSibling.style.display='none'; this.parentElement.querySelector('.slot-no').style.display='none';" onerror="this.style.display='none'">
+        <div class="slot-no">${num}</div>
+        <div class="placeholder-txt">Add<br>images/cover-${num}.jpg</div>
+      `;
+      coverGrid.appendChild(slot);
+    }
+
+    // Build manuscript sample slots — drop PDFs into /manuscripts/
+    const msFiles = [
+      {name:"Bound to the Alpha's Throne", file:'manuscripts/sample-01.pdf'},
+      {name:'The Vineyard We Never Sold', file:'manuscripts/sample-02.pdf'},
+      {name:'Contract Application Outline (Sample)', file:'manuscripts/sample-03.pdf'},
+      {name:'Nonfiction Guide Sample Chapter', file:'manuscripts/sample-04.pdf'},
+    ];
+    const msGrid = document.getElementById('ms-grid');
+    msFiles.forEach((m) => {
+      const slot = document.createElement('div');
+      slot.className = 'ms-slot';
+      slot.innerHTML = `
+        <div class="ms-left">
+          <div class="ms-icon"></div>
+          <div>
+            <h4>${m.name}</h4>
+            <span>PDF Sample</span>
+          </div>
+        </div>
+        <a class="ms-dl" href="${m.file}" download>Download</a>
+      `;
+      msGrid.appendChild(slot);
+    });
+
+    // Build 10 testimonial slots — drop images into /testimonials/testimonial-01.jpg ... 10.jpg
+    const testiGrid = document.getElementById('testi-grid');
+    for(let i=1; i<=10; i++){
+      const num = String(i).padStart(2,'0');
+      const slot = document.createElement('div');
+      slot.className = 'testi-slot';
+      slot.innerHTML = `
+        <img src="testimonials/testimonial-${num}.jpg" alt="Testimonial ${num}" onload="this.classList.add('loaded'); this.nextElementSibling.style.display='none'; this.parentElement.querySelector('.placeholder-txt').style.display='none';" onerror="this.style.display='none'">
+        <div class="quote-mark">&ldquo;</div>
+        <div class="placeholder-txt">Add<br>testimonials/testimonial-${num}.jpg</div>
+      `;
+      testiGrid.appendChild(slot);
+    }
+  });
+</script>
+
+</body>
+</html>
