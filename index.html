@@ -3,114 +3,349 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adenle Joshua | Josh Deck — Amazon KDP Publishing Strategist</title>
+<title>Josh Deck | Amazon KDP Publishing Strategist</title>
 <style>
   :root{
-    --navy:#0B2E59;
-    --navy-soft:#274B78;
-    --paper:#FFFFFF;
-    --paper-dim:#EEF3FA;
-    --blue:#1E64D6;
-    --blue-bright:#3E82F5;
-    --sky:#DCE9FB;
-    --line:#D7E2F0;
-    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
-    --mono: 'IBM Plex Mono', 'Courier New', monospace;
-    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --wordmark: 'Futura', 'Century Gothic', 'Trebuchet MS', var(--sans);
+    --bg:#1B1B1E;
+    --card:#232327;
+    --card-2:#2A2A2F;
+    --line:#333338;
+    --gold:#F0B429;
+    --gold-dim:#8a6a1f;
+    --text:#F2F2F0;
+    --text-dim:#A8A8AE;
+    --sans: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
   body{
-    background:var(--paper);
-    color:var(--navy);
-    font-family:var(--sans);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
+    background:var(--bg); color:var(--text); font-family:var(--sans);
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+    padding-bottom:86px;
   }
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
-  }
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;} }
 
-  a{color:inherit;}
-  a:focus-visible, button:focus-visible{outline:2px solid var(--blue); outline-offset:3px;}
+  .app{max-width:460px; margin:0 auto; padding:18px 16px 0;}
 
-  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+  /* ---------- CARD BASE ---------- */
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:22px;
+    padding:26px 24px; margin-bottom:18px;
+  }
+  .bar{width:44px; height:3px; background:var(--gold); border-radius:2px; margin-bottom:18px;}
 
-  /* ---------- NAV ---------- */
-  nav{
-    position:sticky; top:0; z-index:50;
-    background:rgba(255,255,255,0.94);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--line);
+  /* ---------- PROFILE CARD ---------- */
+  .profile-card{display:flex; align-items:center; justify-content:space-between; gap:16px; cursor:pointer;}
+  .profile-left{display:flex; align-items:center; gap:16px;}
+  .avatar{
+    width:64px; height:64px; border-radius:16px; flex-shrink:0;
+    background:linear-gradient(135deg, var(--gold), #7a5510);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:1.3rem; color:#1B1B1E;
+    overflow:hidden; position:relative;
   }
-  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px;}
-  .brand{
-    font-family:var(--wordmark); font-weight:800; font-size:1.7rem; letter-spacing:0.01em;
-    color:var(--navy); text-transform:uppercase;
+  .avatar img{width:100%; height:100%; object-fit:cover; border-radius:16px; position:absolute; top:0; left:0; display:none;}
+  .avatar img.loaded{display:block;}
+  .profile-name{font-size:1.15rem; font-weight:600;}
+  .profile-tag{
+    display:inline-block; margin-top:6px; background:var(--card-2); color:var(--text-dim);
+    font-size:0.72rem; padding:5px 12px; border-radius:20px; letter-spacing:0.02em;
   }
-  .brand span{color:var(--blue);}
-  .navlinks{display:flex; gap:28px; font-size:0.82rem; letter-spacing:0.06em; text-transform:uppercase; font-family:var(--mono);}
-  .navlinks a{text-decoration:none; opacity:0.7; transition:opacity 0.2s; color:var(--navy-soft);}
-  .navlinks a:hover{opacity:1;}
-  @media (max-width:800px){.navlinks{display:none;}}
+  .chev{width:26px; height:26px; border-radius:50%; background:var(--card-2); display:flex; align-items:center; justify-content:center; transition:transform 0.25s ease; flex-shrink:0;}
+  .chev.open{transform:rotate(180deg);}
+  .chev svg{width:12px; height:12px; stroke:var(--gold);}
 
-  /* ---------- HERO ---------- */
-  header.hero{padding:70px 0 60px; border-bottom:1px solid var(--line); position:relative; overflow:hidden; background:linear-gradient(180deg, var(--sky) 0%, var(--paper) 65%);}
+  .profile-details{max-height:0; overflow:hidden; transition:max-height 0.35s ease;}
+  .profile-details.open{max-height:400px;}
+  .detail-row{display:flex; align-items:center; gap:14px; padding:14px 0; border-top:1px solid var(--line);}
+  .detail-icon{width:34px; height:34px; border-radius:10px; background:var(--card-2); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .detail-icon svg{width:16px; height:16px; stroke:var(--gold); fill:none;}
+  .detail-label{font-size:0.65rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim);}
+  .detail-value{font-size:0.92rem; font-weight:500; margin-top:2px;}
+  .social-row{display:flex; gap:12px; margin-top:16px; padding-top:16px; border-top:1px solid var(--line);}
+  .social-btn{width:36px; height:36px; border-radius:10px; background:var(--card-2); display:flex; align-items:center; justify-content:center;}
+  .social-btn svg{width:16px; height:16px; stroke:var(--text-dim); fill:none;}
 
-  .hero-wordmark{
-    font-family:var(--wordmark); font-weight:800; text-transform:uppercase;
-    font-size:clamp(3.2rem, 11vw, 8.5rem); line-height:0.88; letter-spacing:-0.01em;
-    color:var(--navy);
-  }
-  .hero-wordmark .hi{color:var(--blue);}
+  /* ---------- SECTION HEADS ---------- */
+  h2.sec-title{font-size:1.4rem; font-weight:700; margin-bottom:2px;}
+  .card p{color:var(--text-dim); font-size:0.93rem; margin-bottom:14px;}
+  .card p:last-child{margin-bottom:0;}
 
-  .eyebrow{
-    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--blue); margin:26px 0 14px; display:flex; align-items:center; gap:10px;
-  }
-  .eyebrow::before{content:''; width:26px; height:1px; background:var(--blue); display:inline-block;}
+  /* ---------- SERVICE / WHAT-I-DO CARDS ---------- */
+  .service-card{text-align:center; padding:30px 20px;}
+  .service-icon{width:50px; height:50px; margin:0 auto 16px; border:1.5px solid var(--gold); border-radius:12px; display:flex; align-items:center; justify-content:center;}
+  .service-icon svg{width:24px; height:24px; stroke:var(--gold); fill:none;}
+  .service-card h3{font-size:1.05rem; margin-bottom:8px;}
+  .service-card p{font-size:0.88rem; text-align:center;}
 
-  .hero .names{font-family:var(--mono); font-size:0.95rem; color:var(--navy-soft);}
-  .hero .names b{color:var(--navy); font-weight:700;}
+  /* ---------- SKILLS ---------- */
+  .skill{margin-bottom:18px;}
+  .skill:last-child{margin-bottom:0;}
+  .skill-top{display:flex; justify-content:space-between; font-size:0.88rem; margin-bottom:8px;}
+  .skill-top span:last-child{color:var(--gold); font-weight:600;}
+  .skill-track{height:6px; background:var(--card-2); border-radius:4px; overflow:hidden;}
+  .skill-fill{height:100%; background:var(--gold); border-radius:4px;}
 
-  .hero p.lede{
-    margin-top:20px; max-width:620px; font-size:1.08rem; color:var(--navy-soft);
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-scroll{display:flex; gap:14px; overflow-x:auto; padding-bottom:4px; margin:0 -24px; padding-left:24px; padding-right:24px;}
+  .testi-slot{
+    min-width:220px; aspect-ratio:4/5; background:var(--card-2); border:1.5px dashed var(--gold-dim);
+    border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    position:relative; overflow:hidden; flex-shrink:0;
   }
+  .testi-slot img{width:100%; height:100%; object-fit:cover; display:none; border-radius:16px;}
+  .testi-slot img.loaded{display:block;}
+  .testi-slot .quote-mark{font-size:2rem; color:var(--gold); line-height:1;}
+  .testi-slot .placeholder-txt{font-size:0.68rem; color:var(--text-dim); text-align:center; padding:0 10px;}
 
-  .hero-stats{
-    display:flex; gap:0; margin-top:44px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  /* ---------- CLIENTS / PLATFORM BADGES ---------- */
+  .badge-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .badge{
+    background:var(--card-2); border-radius:14px; padding:20px 12px; text-align:center;
+    font-weight:600; font-size:0.9rem; color:var(--text-dim); border:1px solid var(--line);
   }
-  .stat{flex:1; padding:20px 20px 20px 0; border-right:1px solid var(--line);}
-  .stat:last-child{border-right:none;}
-  .stat .num{font-family:var(--serif); font-size:2.1rem; font-weight:700; color:var(--blue);}
-  .stat .label{font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--navy-soft); margin-top:4px;}
+  .badge b{display:block; color:var(--gold); font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px; font-weight:600;}
 
-  .manuscript{
-    margin-top:56px;
-    background:var(--paper);
-    border:1px solid var(--line);
-    box-shadow: 0 18px 40px -22px rgba(11,46,89,0.25);
-    padding:38px 42px;
-    position:relative;
-    font-family:var(--serif);
-    font-size:1.02rem;
-    color:var(--navy-soft);
-    max-width:760px;
+  /* ---------- PORTFOLIO ---------- */
+  .filter-select{
+    width:100%; background:var(--card-2); border:1px solid var(--line); color:var(--text);
+    padding:14px 16px; border-radius:12px; font-size:0.92rem; margin-bottom:18px; font-family:var(--sans);
   }
-  .manuscript::before{
-    content:'MS. — FRONT MATTER REVIEW';
-    position:absolute; top:-11px; left:36px; background:var(--paper);
-    padding:0 10px; font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em;
-    color:var(--navy-soft);
+  .cover-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  .cover-slot{
+    aspect-ratio:2/3; background:var(--card-2); border:1.5px dashed var(--gold-dim); border-radius:12px;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px; overflow:hidden; position:relative;
   }
-  .manuscript p{margin-bottom:14px;}
-  .mark{
-    position:relative; text-decoration:none; border-bottom:2px solid var(--blue);
-    color:var(--navy);
+  .cover-slot img{width:100%; height:100%; object-fit:cover; display:none;}
+  .cover-slot img.loaded{display:block;}
+  .cover-slot .slot-no{font-size:1.2rem; color:var(--gold); font-weight:700;}
+  .cover-slot .placeholder-txt{font-size:0.58rem; color:var(--text-dim); text-align:center; padding:0 4px;}
+
+  .ms-slot{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:var(--card-2); border-radius:12px; padding:16px 18px; margin-bottom:10px;
   }
-  .mark::after{
-    content: attr(data-note);
+  .ms-slot:last-child{margin-bottom:0;}
+  .ms-left{display:flex; align-items:center; gap:12px;}
+  .ms-icon{width:30px; height:38px; background:var(--gold); border-radius:3px; flex-shrink:0;}
+  .ms-slot h4{font-size:0.88rem; font-weight:600;}
+  .ms-slot span{font-size:0.68rem; color:var(--text-dim); text-transform:uppercase;}
+  .ms-dl{font-size:0.72rem; color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold); white-space:nowrap;}
+
+  /* ---------- RESUME / JOURNEY ---------- */
+  .timeline-item{padding-left:22px; border-left:2px solid var(--card-2); position:relative; padding-bottom:24px;}
+  .timeline-item:last-child{padding-bottom:0;}
+  .timeline-item::before{content:''; position:absolute; left:-6px; top:2px; width:10px; height:10px; border-radius:50%; background:var(--gold);}
+  .timeline-item .years{font-size:0.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;}
+  .timeline-item h4{font-size:0.98rem; margin-bottom:4px;}
+  .timeline-item p{font-size:0.86rem;}
+
+  /* ---------- CONTACT ---------- */
+  .cta-btn{
+    display:block; text-align:center; background:var(--gold); color:#1B1B1E; font-weight:700;
+    padding:16px; border-radius:14px; text-decoration:none; margin-top:6px; font-size:0.95rem;
+  }
+  .contact-note{font-size:0.95rem; color:var(--text-dim); margin-bottom:18px;}
+
+  /* ---------- SECTION VISIBILITY ---------- */
+  .tab-section{display:none;}
+  .tab-section.active{display:block;}
+
+  /* ---------- BOTTOM NAV ---------- */
+  nav.bottom-nav{
+    position:fixed; bottom:0; left:0; right:0; z-index:50;
+    background:#141416; border-top:1px solid var(--line);
+    border-radius:22px 22px 0 0;
+  }
+  .nav-inner{
+    max-width:460px; margin:0 auto; display:flex; justify-content:space-around; padding:12px 6px 16px;
+  }
+  .nav-item{
+    display:flex; flex-direction:column; align-items:center; gap:5px; background:none; border:none;
+    color:var(--text-dim); font-family:var(--sans); font-size:0.62rem; cursor:pointer; padding:4px 6px;
+  }
+  .nav-item svg{width:19px; height:19px; stroke:var(--text-dim); fill:none; transition:stroke 0.2s;}
+  .nav-item.active{color:var(--gold);}
+  .nav-item.active svg{stroke:var(--gold);}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- PROFILE CARD (always visible) -->
+  <div class="card profile-card" id="profile-toggle">
+    <div class="profile-left">
+      <div class="avatar">
+        JD
+        <img src="images/profile.jpg" alt="Josh Deck" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <div class="profile-name">Josh Deck</div>
+        <div class="profile-tag">Amazon KDP Publishing Strategist</div>
+      </div>
+    </div>
+    <div class="chev" id="chev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+  </div>
+  <div class="profile-details" id="profile-details">
+    <div class="card" style="margin-top:-8px; border-top-left-radius:0; border-top-right-radius:0;">
+      <div class="detail-row" style="border-top:none; padding-top:0;">
+        <div class="detail-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
+        <div><div class="detail-label">Legal Name</div><div class="detail-value">Adenle Joshua</div></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
+        <div><div class="detail-label">Business Name</div><div class="detail-value">Josh Deck</div></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div><div class="detail-label">Titles Published</div><div class="detail-value">100+</div></div>
+      </div>
+      <div class="social-row">
+        <div class="social-btn"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0z"/></svg></div>
+        <div class="social-btn"><svg viewBox="0 0 24 24" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div>
+        <div class="social-btn"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16v16H4z"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT TAB -->
+  <section class="tab-section active" id="tab-about">
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title">About Me</h2>
+      <p style="margin-top:14px;">I'm Adenle Joshua, publishing under the name Josh Deck. Over more than 100 titles — my own catalog and client work across fiction and nonfiction — I've built a repeatable system for taking a book from idea to a commercially positioned product on Amazon.</p>
+      <p>My job is to make sure your book isn't just written — it's researched, positioned, and optimized to actually sell. I combine market research, keyword strategy, editorial quality, and metadata into one complete publishing process.</p>
+    </div>
+
+    <div class="card"><div class="bar"></div><h2 class="sec-title" style="margin-bottom:14px;">What I'm Doing</h2></div>
+
+    <div class="card service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+      <h3>Market Research &amp; Validation</h3>
+      <p>Best Seller and review analysis to validate a book idea before a word is written.</p>
+    </div>
+    <div class="card service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10H7z"/><path d="M3 3l4 4M21 3l-4 4M3 21l4-4M21 21l-4-4"/></svg></div>
+      <h3>Amazon SEO &amp; Metadata</h3>
+      <p>Keyword architecture, categories, and backend optimization built for discoverability.</p>
+    </div>
+    <div class="card service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <h3>Editorial &amp; Structure</h3>
+      <p>Chapter planning, fact-checking, and a professional-standard editorial pass.</p>
+    </div>
+    <div class="card service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M8 6l1.5-2h5L16 6"/></svg></div>
+      <h3>Cover &amp; Launch Strategy</h3>
+      <p>Bestseller-informed cover direction and a full publishing roadmap to launch.</p>
+    </div>
+
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title" style="margin-bottom:18px;">Core Skills</h2>
+      <div class="skill"><div class="skill-top"><span>Market Research &amp; Validation</span><span>95%</span></div><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div></div>
+      <div class="skill"><div class="skill-top"><span>Amazon Keyword SEO</span><span>92%</span></div><div class="skill-track"><div class="skill-fill" style="width:92%"></div></div></div>
+      <div class="skill"><div class="skill-top"><span>Editorial Quality Control</span><span>88%</span></div><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
+      <div class="skill"><div class="skill-top"><span>Cover &amp; Metadata Strategy</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div></div>
+    </div>
+  </section>
+
+  <!-- RESUME TAB -->
+  <section class="tab-section" id="tab-resume">
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title" style="margin-bottom:18px;">Publishing Journey</h2>
+      <div class="timeline-item">
+        <div class="years">Ongoing</div>
+        <h4>Independent KDP Publisher &amp; Strategist</h4>
+        <p>Publishing fiction and nonfiction across Amazon KDP, PublishDrive, and GoodNovel, growing a 100+ title catalog.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="years">Ongoing</div>
+        <h4>Fiction on GoodNovel's Contract Program</h4>
+        <p>Building signed titles from reference-book research through a full contract application outline.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="years">Ongoing</div>
+        <h4>Publishing Mentorship Program</h4>
+        <p>Teaching independent authors the full research-to-launch KDP workflow.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title" style="margin-bottom:14px;">Publishing Philosophy</h2>
+      <p style="font-style:italic;">"Guesswork is the most expensive part of publishing. Every hour spent writing toward the wrong audience is an hour a competitor spent writing toward a proven one."</p>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO TAB -->
+  <section class="tab-section" id="tab-portfolio">
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title" style="margin-bottom:18px;">Portfolio</h2>
+      <select class="filter-select" id="cat-select">
+        <option>All Categories</option>
+        <option>Fiction — Romance &amp; Paranormal</option>
+        <option>Nonfiction Guides</option>
+        <option>Mentorship &amp; Strategy</option>
+      </select>
+      <p style="margin-bottom:14px; font-size:0.82rem;">Ten covers from published titles. Add yours: create an <b style="color:var(--gold);">images</b> folder next to this file and save covers as <b style="color:var(--gold);">cover-01.jpg</b> through <b style="color:var(--gold);">cover-10.jpg</b>.</p>
+      <div class="cover-grid" id="cover-grid"></div>
+    </div>
+
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title" style="margin-bottom:14px;">Manuscript Samples</h2>
+      <p style="font-size:0.82rem;">Add a <b style="color:var(--gold);">manuscripts</b> folder with PDFs to make these downloadable.</p>
+      <div id="ms-grid"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS TAB -->
+  <section class="tab-section" id="tab-testimonials">
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title" style="margin-bottom:14px;">Testimonials</h2>
+      <p style="font-size:0.82rem;">Add a <b style="color:var(--gold);">testimonials</b> folder with screenshots named <b style="color:var(--gold);">testimonial-01.jpg</b> through <b style="color:var(--gold);">10.jpg</b> to fill these in.</p>
+      <div class="testi-scroll" id="testi-scroll"></div>
+    </div>
+
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title" style="margin-bottom:16px;">Platforms</h2>
+      <div class="badge-grid">
+        <div class="badge"><b>Publish</b>Amazon KDP</div>
+        <div class="badge"><b>Fiction</b>GoodNovel</div>
+        <div class="badge"><b>Distribute</b>PublishDrive</div>
+        <div class="badge"><b>Audio</b>FindAway Voices</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT TAB -->
+  <section class="tab-section" id="tab-contact">
+    <div class="card">
+      <div class="bar"></div>
+      <h2 class="sec-title" style="margin-bottom:14px;">Let's Talk</h2>
+      <p class="contact-note">If you have a book idea, a stalled manuscript, or a catalog that needs real strategy behind it — send a message and I'll tell you honestly what it needs.</p>
+      <a href="#" class="cta-btn">Message Josh Deck on Upwork</a>
+    </div>
+    <div class="card">
+      <div class="detail-row" style="border-top:none; padding-top:0;">
+        <div class="detail-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
+        <div><div class="detail-label">Email</div><div class="detail-value">yourname@example.com</div></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 3a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .7a2 2 0 0 1 1.7 2z"/></svg></div>
+        <div><div class="detail-label">Phone</div><div class="detail-value">+000 000 0000</div></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="detail-label">Location</div><div class="detail-value">Nigeria</div></div>
+      </div>
+      <div class="social-row">
+        <div class="social-btn"><svg viewBox="0 0 24 24" st    content: attr(data-note);
     display:block;
     font-family:var(--mono); font-size:0.68rem; color:var(--blue);
     text-transform:uppercase; letter-spacing:0.04em;
